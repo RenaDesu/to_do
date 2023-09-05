@@ -3,6 +3,10 @@
 
     padding: rem(40px) 0;
 
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(10px);
+
     &__item {
         width: 50%;
 
@@ -19,12 +23,12 @@
     &__block {
         display: flex;
         align-items: flex-start;
-        column-gap: rem(5px);
+        justify-content: space-between;
     }
 
     &__box {
         &--text {
-            max-width: 77%;
+            max-width: 75%;
         }
     }
 
@@ -35,6 +39,8 @@
         font-size: rem($font-size-medium);
         line-height: rem($line-height-medium);
         font-weight: $font-weight-bold;
+
+        overflow-wrap: break-word;
 
         &--main {
             margin-bottom: rem(20px);
@@ -47,9 +53,16 @@
 
     &__description {
         margin: 0;
+        overflow-wrap: break-word;
     }
 
     &__date {
+        font-size: rem($font-size-medium);
+        line-height: rem($line-height-medium);
+        font-weight: $font-weight-bold;
+    }
+
+    &__time {
         font-size: rem($font-size-medium);
         line-height: rem($line-height-medium);
         font-weight: $font-weight-bold;

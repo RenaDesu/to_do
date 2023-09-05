@@ -20,30 +20,31 @@
 
   <main class="page__content content">
     <div class="container">
-      <form class="form" action="#">
+      <form class="form" data-form action="#">
         <div class="form__block">
           <div class="form__box">
             <label class="form__label" for="taskName">Название задачи</label>
-            <input class="form__input" type="text" name="taskName" id="taskName">
+            <input class="form__input" data-task-name type="text" name="taskName" id="taskName">
           </div>
           <div class="form__box">
             <label class="form__label" for="taskDescription">Описаие задачи (опционально)</label>
-            <textarea class="form__input form__input--textarea" name="taskDescription" id="taskDescription"></textarea>
+            <textarea class="form__input form__input--textarea" data-task-description name="taskDescription" id="taskDescription"></textarea>
           </div>
-          <button class="form__button button" type="button">Добавить задачу</button>
+          <button class="form__button button" data-task-add type="button">Добавить задачу</button>
         </div>
         <div class="form__block">
           <div class="form__box">
             <label class="form__label" for="taskDeadlineDate">Дата выполнения</label>
-            <input class="form__input form__input--date" type="date" name="taskDeadlineDate" id="taskDeadlineDate">
+            <input class="form__input form__input--date" data-task-date type="date" name="taskDeadlineDate" id="taskDeadlineDate">
           </div>
           <div class="form__box">
             <label class="form__label" for="taskDeadlineTime">Время выполнения</label>
-            <input class="form__input form__input--date" type="time" name="taskDeadlineTime" id="taskDeadlineTime">
+            <input class="form__input form__input--date" data-task-time type="time" name="taskDeadlineTime" id="taskDeadlineTime">
           </div>
         </div>
       </form>
-      <ul class="tasks">
+
+      <ul class="tasks" data-task-container>
         <li>
           <h3 class="tasks__title tasks__title--main">Задачи &#9650</h3>
         </li>
@@ -68,7 +69,7 @@
         </div>
         <div class="tasks__box">
           <span class="tasks__date"></span>
-          <span class="tasks__date"></span>
+          <span class="tasks__time"></span>
         </div>
       </div>
       <div class="tasks__buttons">
