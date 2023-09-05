@@ -1,0 +1,52 @@
+.form {
+    padding: rem(40px) 0;
+
+    display: flex;
+    column-gap: rem(20px);
+
+    &__block {
+        display: flex;
+        flex-direction: column;
+        row-gap: rem(20px);
+
+        width: 50%;
+    }
+
+    &__box {
+        display: flex;
+        flex-direction: column;
+        row-gap: rem(10px);
+    }
+
+    &__input {
+        padding: rem(5px);
+
+        border: rem(1px) solid $medium-purple;
+        border-radius: rem($border-radius-medium);
+
+        transition: outline 0.3s ease;
+
+        cursor: pointer;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &:focus-visible {
+            outline: rem(1px) solid $lavender;
+            border: rem(1px) solid $lavender;
+        }
+
+        &--textarea {
+            height: rem(100px);
+            resize: none;
+        }
+
+        &--date {
+            width: 20%;
+        }
+    }
+
+    &__button {
+        align-self: flex-start;
+    }
+}
