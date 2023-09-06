@@ -32,4 +32,13 @@
 
         border-radius: rem($border-radius-big);
     }
+
+    &--small {
+        padding: rem(3px) rem(7px);
+
+        font-size: rem($font-size-small);
+        line-height: rem($line-height-small);
+
+        border-radius: rem($border-radius-big);
+    }
 }

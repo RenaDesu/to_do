@@ -7,6 +7,16 @@
     flex-direction: column;
     row-gap: rem(10px);
 
+    &__main-item {
+        padding-top: rem(10px);
+
+        display: flex;
+        align-items: flex-start;
+        column-gap: rem(10px);
+
+        border-top: rem(2px) solid $medium-purple;
+    }
+
     &__item {
         width: 50%;
 
@@ -41,14 +51,6 @@
         font-weight: $font-weight-bold;
 
         overflow-wrap: break-word;
-
-        &--main {
-            margin-bottom: rem(20px);
-
-            border-top: rem(2px) solid $medium-purple;
-
-            cursor: pointer;
-        }
     }
 
     &__description {
