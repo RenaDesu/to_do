@@ -11,6 +11,8 @@ const form = document.querySelector('[data-form]');
 const sortBtn = document.querySelector('[data-sort]');
 const taskContainer = document.querySelector('[data-task-container]');
 
+const random_id = `_${Math.random().toString(30).substring(2,17) + Math.random().toString(30).substring(2,17)}`;
+
 taskAddBtn.addEventListener('click', () => {
     getTask(taskName.value, taskDescription.value, taskDate.value, taskTime.value);
     form.reset();
@@ -24,14 +26,15 @@ function getTask(name, description, date, time) {
         name: `${name}`,
         description: `${description}`,
         date: `${date}`,
-        time: `${time}`
+        time: `${time}`,
+        id: `item ${random_id}`
     }, ];
 
-    localStorage.setItem(`item ${localStorage.length + 1}`, JSON.stringify(tasksArray[0]));
+    localStorage.setItem(`item ${random_id}`, JSON.stringify(tasksArray[0]));
 
-    data = JSON.parse(localStorage.getItem(`item ${localStorage.length}`));
+    data = JSON.parse(localStorage.getItem(`item ${random_id}`));
 
-    addTask(data.name, data.description, data.date, data.time, localStorage.length - 1);
+    addTask(data.name, data.description, data.date, data.time, `item ${random_id}`);
 }
 
 //Отображение задач на странице
@@ -39,7 +42,7 @@ for (let key in localStorage) {
     if (localStorage.hasOwnProperty(key)) {
         let data;
         data = JSON.parse(localStorage.getItem(key));
-        addTask(data.name, data.description, data.date, data.time, key.replace(/[^0-9]/g, ''), data.completed);
+        addTask(data.name, data.description, data.date, data.time, key, data.completed);
     }
 }
 
@@ -76,8 +79,8 @@ sortBtn.addEventListener('click', () => {
         <button class="button button--small" data-sort type="button">Сортировать по дате</button>
      </li>`;
 
-    sortedDataArr.forEach((elem, i) => {
-        addTask(elem.name, elem.description, elem.date, elem.time, i, elem.completed);
+    sortedDataArr.forEach((elem) => {
+        addTask(elem.name, elem.description, elem.date, elem.time, elem.id, elem.completed);
     });
 
 });
@@ -89,13 +92,13 @@ window.addEventListener('click', (e) => {
         target.classList.toggle('tasks__button-complete-tick--checked');
         const parent = target.closest('.tasks__item');
         let data;
-        data = JSON.parse(localStorage.getItem(`item ${parent.id}`));
+        data = JSON.parse(localStorage.getItem(`${parent.id}`));
         if (target.classList.contains('tasks__button-complete-tick--checked')) {
             data.completed = true;
         } else {
             data.completed = false;
         }
-        localStorage.setItem(`item ${parent.id}`, JSON.stringify(data));
+        localStorage.setItem(`${parent.id}`, JSON.stringify(data));
     }
 });
 
@@ -105,7 +108,7 @@ window.addEventListener('click', (e) => {
     const target = e.target;
     if (target.hasAttribute('data-delete')) {
         const parent = target.closest('.tasks__item');
-        localStorage.removeItem(`item ${parent.id}`);
+        localStorage.removeItem(`${parent.id}`);
         taskContainer.removeChild(parent);
     }
 });
