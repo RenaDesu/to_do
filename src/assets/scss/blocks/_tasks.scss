@@ -74,4 +74,28 @@
         display: flex;
         column-gap: rem(15px);
     }
+
+    &__button-complete {
+        align-self: center;
+
+        display: flex;
+        align-items: center;
+        column-gap: rem(5px);
+
+        &-tick {
+            width: rem(23px);
+            height: rem(23px);
+
+            border: rem(1px) solid $medium-purple;
+            border-radius: rem($border-radius-small);
+
+            cursor: pointer;
+
+            &--checked {
+                background-image: url('../images/tick.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        }
+    }
 }

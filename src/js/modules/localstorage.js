@@ -16,7 +16,7 @@ taskAddBtn.addEventListener('click', () => {
     form.reset();
 });
 
-
+//Добавление задачи
 function getTask(name, description, date, time) {
     let data;
 
@@ -27,25 +27,31 @@ function getTask(name, description, date, time) {
         time: `${time}`
     }, ];
 
-    localStorage.setItem(`item ${localStorage.length}`, JSON.stringify(tasksArray[0]));
+    localStorage.setItem(`item ${localStorage.length + 1}`, JSON.stringify(tasksArray[0]));
 
-    data = JSON.parse(localStorage.getItem(`item ${localStorage.length - 1}`));
+    data = JSON.parse(localStorage.getItem(`item ${localStorage.length}`));
 
     addTask(data.name, data.description, data.date, data.time, localStorage.length - 1);
 }
 
-for (let i = 0; i < localStorage.length; i++) {
-    let data;
-    data = JSON.parse(localStorage.getItem(`item ${i}`));
-    addTask(data.name, data.description, data.date, data.time, i);
+//Отображение задач на странице
+for (let key in localStorage) {
+    if (localStorage.hasOwnProperty(key)) {
+        let data;
+        data = JSON.parse(localStorage.getItem(key));
+        addTask(data.name, data.description, data.date, data.time, key.replace(/[^0-9]/g, ''), data.completed);
+    }
 }
 
+//Сортировка задач
 sortBtn.addEventListener('click', () => {
     let dataArr = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        let data;
-        data = JSON.parse(localStorage.getItem(`item ${i}`));
-        dataArr.push(data);
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            let data;
+            data = JSON.parse(localStorage.getItem(key));
+            dataArr.push(data);
+        }
     }
     const sortedDataArr = dataArr.sort((x, y) => {
         if (x.date < y.date) {
@@ -64,15 +70,44 @@ sortBtn.addEventListener('click', () => {
         return 0;
     });
 
-    taskContainer.innerHTML = 
-    `<li class="tasks__main-item">
+    taskContainer.innerHTML =
+        `<li class="tasks__main-item">
         <h3 class="tasks__title">Задачи</h3>
         <button class="button button--small" data-sort type="button">Сортировать по дате</button>
      </li>`;
 
     sortedDataArr.forEach((elem, i) => {
-        addTask(elem.name, elem.description, elem.date, elem.time, i);
+        addTask(elem.name, elem.description, elem.date, elem.time, i, elem.completed);
     });
 
 });
+
+//Пометка задачи как выполненной
+window.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.hasAttribute('data-completed')) {
+        target.classList.toggle('tasks__button-complete-tick--checked');
+        const parent = target.closest('.tasks__item');
+        let data;
+        data = JSON.parse(localStorage.getItem(`item ${parent.id}`));
+        if (target.classList.contains('tasks__button-complete-tick--checked')) {
+            data.completed = true;
+        } else {
+            data.completed = false;
+        }
+        localStorage.setItem(`item ${parent.id}`, JSON.stringify(data));
+    }
+});
+
+
+//Удаление задач
+window.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.hasAttribute('data-delete')) {
+        const parent = target.closest('.tasks__item');
+        localStorage.removeItem(`item ${parent.id}`);
+        taskContainer.removeChild(parent);
+    }
+});
+
 // localStorage.clear();
