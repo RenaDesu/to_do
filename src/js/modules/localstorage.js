@@ -27,14 +27,15 @@ function getTask(name, description, date, time) {
         description: `${description}`,
         date: `${date}`,
         time: `${time}`,
-        id: `item ${random_id}`
+        id: `item ${random_id}`,
+        completed: false
     }, ];
 
     localStorage.setItem(`item ${random_id}`, JSON.stringify(tasksArray[0]));
 
     data = JSON.parse(localStorage.getItem(`item ${random_id}`));
 
-    addTask(data.name, data.description, data.date, data.time, `item ${random_id}`);
+    addTask(data.name, data.description, data.date, data.time, `item ${random_id}`, data.completed);
 }
 
 //Отображение задач на странице
@@ -102,7 +103,6 @@ window.addEventListener('click', (e) => {
     }
 });
 
-
 //Удаление задач
 window.addEventListener('click', (e) => {
     const target = e.target;
@@ -113,4 +113,13 @@ window.addEventListener('click', (e) => {
     }
 });
 
-// localStorage.clear();
+//Изменение задачи
+export function updateTask(id, name, description, date, time) {
+    let data;
+    data = JSON.parse(localStorage.getItem(`${id}`));
+    data.name = name;
+    data.description = description;
+    data.date = date;
+    data.time = time;
+    localStorage.setItem(`${id}`, JSON.stringify(data));
+}
