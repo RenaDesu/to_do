@@ -84,6 +84,27 @@ sortBtn.addEventListener('click', () => {
         addTask(elem.name, elem.description, elem.date, elem.time, elem.id, elem.completed);
     });
 
+    const taskDates = document.querySelectorAll('.tasks__date');
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    taskDates.forEach((date) => {
+        const parent = date.closest('.tasks__item');
+        const completedBtn = parent.querySelector('[data-completed]');
+        if (date.innerText == todayDate && !completedBtn.classList.contains('tasks__button-complete-tick--checked')) {
+            date.style.color = 'red';
+            if (date.style.color == 'red') {
+                const sibling = date.nextSibling;
+                const nextSibling = sibling.nextSibling;
+                nextSibling.style.color = 'red';
+            } else {
+                const sibling = date.nextSibling;
+                const nextSibling = sibling.nextSibling;
+                nextSibling.style.color = 'black';
+            }
+        } else {
+            date.style.color = 'black';
+        }
+    });
 });
 
 //Пометка задачи как выполненной
@@ -92,12 +113,18 @@ window.addEventListener('click', (e) => {
     if (target.hasAttribute('data-completed')) {
         target.classList.toggle('tasks__button-complete-tick--checked');
         const parent = target.closest('.tasks__item');
+        const date = parent.querySelector('.tasks__date');
+        const time = parent.querySelector('.tasks__time');
         let data;
         data = JSON.parse(localStorage.getItem(`${parent.id}`));
         if (target.classList.contains('tasks__button-complete-tick--checked')) {
             data.completed = true;
+            date.style.color = 'black';
+            time.style.color = 'black';
         } else {
             data.completed = false;
+            date.style.color = 'red';
+            time.style.color = 'red';
         }
         localStorage.setItem(`${parent.id}`, JSON.stringify(data));
     }

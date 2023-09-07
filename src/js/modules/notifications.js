@@ -30,6 +30,15 @@ function notify() {
                 body: 'Срок вашей задачи подошел, загляните в приложение ToDo',
                 icon: 'https://cdn-icons-png.flaticon.com/512/3248/3248093.png',
             });
+        }
+    });
+}
+
+function setNotificationColor() {
+    taskDates.forEach((date) => {
+        const parent = date.closest('.tasks__item');
+        const completedBtn = parent.querySelector('[data-completed]');
+        if (date.innerText == todayDate && !completedBtn.classList.contains('tasks__button-complete-tick--checked')) {
             date.style.color = 'red';
             if (date.style.color == 'red') {
                 const sibling = date.nextSibling;
@@ -45,3 +54,5 @@ function notify() {
         }
     });
 }
+
+setNotificationColor();
