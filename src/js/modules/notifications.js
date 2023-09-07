@@ -1,3 +1,6 @@
+const taskDates = document.querySelectorAll('.tasks__date');
+const todayDate = new Date().toISOString().slice(0, 10);
+
 if ('Notification' in window) {
 
     if (Notification.permission === 'granted') {
@@ -19,5 +22,26 @@ if ('Notification' in window) {
 }
 
 function notify() {
-    new Notification('Привет!');
+    taskDates.forEach((date) => {
+        const parent = date.closest('.tasks__item');
+        const completedBtn = parent.querySelector('[data-completed]');
+        if (date.innerText == todayDate && !completedBtn.classList.contains('tasks__button-complete-tick--checked')) {
+            new Notification('Внимание!', {
+                body: 'Срок вашей задачи подошел, загляните в приложение ToDo',
+                icon: 'https://cdn-icons-png.flaticon.com/512/3248/3248093.png',
+            });
+            date.style.color = 'red';
+            if (date.style.color == 'red') {
+                const sibling = date.nextSibling;
+                const nextSibling = sibling.nextSibling;
+                nextSibling.style.color = 'red';
+            } else {
+                const sibling = date.nextSibling;
+                const nextSibling = sibling.nextSibling;
+                nextSibling.style.color = 'black';
+            }
+        } else {
+            date.style.color = 'black';
+        }
+    });
 }
