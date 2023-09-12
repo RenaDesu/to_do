@@ -16,6 +16,7 @@ const random_id = `_${Math.random().toString(30).substring(2,17) + Math.random()
 taskAddBtn.addEventListener('click', () => {
     getTask(taskName.value, taskDescription.value, taskDate.value, taskTime.value);
     form.reset();
+    location.reload();
 });
 
 //Добавление задачи
@@ -40,7 +41,7 @@ function getTask(name, description, date, time) {
 
 //Отображение задач на странице
 for (let key in localStorage) {
-    if (localStorage.hasOwnProperty(key)) {
+    if (localStorage.hasOwnProperty(key) && key.indexOf('item') !== -1) {
         let data;
         data = JSON.parse(localStorage.getItem(key));
         addTask(data.name, data.description, data.date, data.time, key, data.completed);
@@ -51,7 +52,7 @@ for (let key in localStorage) {
 sortBtn.addEventListener('click', () => {
     let dataArr = [];
     for (let key in localStorage) {
-        if (localStorage.hasOwnProperty(key)) {
+        if (localStorage.hasOwnProperty(key) && key.indexOf('item') !== -1) {
             let data;
             data = JSON.parse(localStorage.getItem(key));
             dataArr.push(data);
